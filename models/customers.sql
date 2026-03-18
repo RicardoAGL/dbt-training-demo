@@ -1,3 +1,8 @@
+-- Ex 2.1: Refactored customers model
+-- Uses ref() to reference staging models instead of inline CTEs
+-- Run: dbt run --select customers  (runs just this model)
+-- Run: dbt run --select +customers (runs this + all upstream dependencies)
+
 with customers as (
 
     select * from {{ ref('stg_customers') }}

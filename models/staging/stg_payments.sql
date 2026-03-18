@@ -1,3 +1,6 @@
+-- Ex 3.2: Staging model using source()
+-- Converts amount from cents to dollars
+
 select
     id as payment_id,
     order_id,

@@ -1,3 +1,8 @@
+-- Ex 4.1: Lineage - orders model
+-- This model creates a node in the DAG between staging and customers
+-- refs: stg_orders, stg_payments -> orders -> customers
+-- Run: dbt run --select +orders  (runs this model and all upstream)
+
 with orders as (
 
     select * from {{ ref('stg_orders') }}

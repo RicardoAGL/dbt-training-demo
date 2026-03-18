@@ -1,3 +1,7 @@
+# -- Ex 3.1: Source configuration --
+# Defines where our raw data lives so we can use {{ source() }} in models
+# Run: dbt source freshness  (to check data freshness)
+
 version: 2
 
 sources:
