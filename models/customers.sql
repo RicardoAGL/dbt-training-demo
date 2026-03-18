@@ -1,7 +1,7 @@
--- Ex 2.1: Refactored customers model
--- Uses ref() to reference staging models instead of inline CTEs
--- Run: dbt run --select customers  (runs just this model)
--- Run: dbt run --select +customers (runs this + all upstream dependencies)
+-- Ex 5.1: Workshop - Refactored customers with lifetime_value
+-- Now references the orders model instead of stg_orders directly
+-- Added: lifetime_value = sum of all order amounts per customer
+-- Verify: total lifetime value across all customers should be $1,672
 
 with customers as (
 
@@ -11,7 +11,7 @@ with customers as (
 
 orders as (
 
-    select * from {{ ref('stg_orders') }}
+    select * from {{ ref('orders') }}
 
 ),
 
@@ -22,7 +22,8 @@ customer_orders as (
 
         min(order_date) as first_order_date,
         max(order_date) as most_recent_order_date,
-        count(order_id) as number_of_orders
+        count(order_id) as number_of_orders,
+        sum(amount) as lifetime_value
 
     from orders
 
@@ -38,7 +39,8 @@ final as (
         customers.last_name,
         customer_orders.first_order_date,
         customer_orders.most_recent_order_date,
-        coalesce(customer_orders.number_of_orders, 0) as number_of_orders
+        coalesce(customer_orders.number_of_orders, 0) as number_of_orders,
+        customer_orders.lifetime_value
 
     from customers
 
