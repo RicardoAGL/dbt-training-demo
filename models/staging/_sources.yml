@@ -6,7 +6,7 @@ version: 2
 
 sources:
   - name: jaffle_shop
-    description: Raw data from the Jaffle Shop app
+    description: "{{ doc('jaffle_shop') }}"
     schema: main
     tables:
       - name: raw_customers
