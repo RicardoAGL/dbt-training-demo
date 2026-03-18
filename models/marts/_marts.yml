@@ -1,0 +1,26 @@
+# -- Ex 5.2: Schema tests for mart models --
+# Tests run with: dbt test --select marts
+# Run all: dbt build  (runs models + tests together)
+
+version: 2
+
+models:
+  - name: customers
+    description: One record per customer with order history and lifetime value
+    columns:
+      - name: customer_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+
+  - name: orders
+    description: One record per order with payment amount
+    columns:
+      - name: order_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: amount
+        description: Total payment amount in dollars
