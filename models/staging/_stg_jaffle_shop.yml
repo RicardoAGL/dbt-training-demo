@@ -34,3 +34,16 @@ models:
         tests:
           - unique
           - not_null
+      - name: order_id
+        description: Foreign key to stg_orders
+        tests:
+          # Ex 5.4: Relationships test - checks every order_id exists in stg_orders
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: payment_method
+        description: How the customer paid
+        tests:
+          # Ex 5.4: Accepted values test on payment methods
+          - accepted_values:
+              values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
