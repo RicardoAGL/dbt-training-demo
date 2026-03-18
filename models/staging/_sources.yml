@@ -1,0 +1,37 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    description: Raw data from the Jaffle Shop app
+    schema: main
+    tables:
+      - name: raw_customers
+        description: One record per customer
+        columns:
+          - name: id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+
+      - name: raw_orders
+        description: One record per order
+        columns:
+          - name: id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+          - name: status
+            tests:
+              - accepted_values:
+                  values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+
+      - name: raw_payments
+        description: One record per payment from Stripe
+        columns:
+          - name: id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
