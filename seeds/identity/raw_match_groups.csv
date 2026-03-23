@@ -1,0 +1,16 @@
+pipeline_run,run_date,source_key,group_id
+T1,2026-01-01,dav:101,group_a
+T1,2026-01-01,smc:202,group_a
+T1,2026-01-01,dav:303,group_b
+T2,2026-02-01,dav:101,group_a
+T2,2026-02-01,smc:202,group_a
+T2,2026-02-01,dav:404,group_a
+T2,2026-02-01,dav:303,group_b
+T3,2026-03-01,dav:101,group_c
+T3,2026-03-01,smc:202,group_c
+T3,2026-03-01,dav:303,group_c
+T3,2026-03-01,dav:404,group_c
+T4,2026-04-01,dav:101,group_a
+T4,2026-04-01,smc:202,group_a
+T4,2026-04-01,dav:404,group_a
+T4,2026-04-01,dav:303,group_d

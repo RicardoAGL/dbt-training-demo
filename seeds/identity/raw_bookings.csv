@@ -1,0 +1,6 @@
+booking_id,source_key,booking_date,amount,destination
+B001,dav:101,2026-01-15,1200,Mallorca
+B002,smc:202,2026-01-20,800,Tenerife
+B003,dav:303,2026-01-25,1500,Crete
+B004,dav:404,2026-02-10,950,Rhodes
+B005,dav:101,2026-03-05,1100,Fuerteventura

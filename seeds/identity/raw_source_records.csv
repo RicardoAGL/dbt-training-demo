@@ -1,0 +1,5 @@
+source_system,source_id,source_key,first_seen_at
+davinci,101,dav:101,2026-01-01
+smc,202,smc:202,2026-01-01
+davinci,303,dav:303,2026-01-01
+davinci,404,dav:404,2026-02-01
