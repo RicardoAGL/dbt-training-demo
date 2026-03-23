@@ -2,7 +2,7 @@
 
 ## What this is
 
-A dbt-duckdb prototype that validates the design where `person_key = md5(PID)` instead of `md5(PTK)`. This eliminates fact reattribution when person groups change.
+A dbt-duckdb prototype that validates the design where `person_key = sha256(PID)` instead of `sha256(PTK)`. This eliminates fact reattribution when person groups change.
 
 Based on Sergi's feedback: the PTK is a transient grouping device used only during identity resolution. Once a PID (persistent UUID) is assigned, everything downstream uses the PID.
 
@@ -81,7 +81,7 @@ dbt test --select test_type:singular tag:identity
 
 1. **PTK is ephemeral** -- lives only in the intermediate layer for identity graph accuracy
 2. **PID is stable** -- assigned once, survives growth/merge, drives everything in Gold
-3. **person_key = md5(PID)** -- the FK on all fact tables, never needs updating
+3. **person_key = sha256(PID)** -- the FK on all fact tables, never needs updating
 4. **Merge rule: majority wins** -- the contributing group with more members keeps its PID
 5. **Split rule: majority inherits** -- largest subgroup keeps PID, others get new ones
 
@@ -97,7 +97,7 @@ models/identity/
   int_person_matching.sql           -- Computes PTK per group per run
   int_person_identity_registry.sql  -- PTK -> PID mapping (the core logic)
   bridge_person_identity.sql        -- source_key -> PTK -> PID -> person_key
-  dim_person.sql                    -- Gold dimension (person_key = md5(PID))
+  dim_person.sql                    -- Gold dimension (person_key = sha256(PID))
   fct_booking.sql                   -- Fact table with stable person_key FK
   int_pid_stability_proof.sql       -- Exploration: PTK changes vs PID stability
 

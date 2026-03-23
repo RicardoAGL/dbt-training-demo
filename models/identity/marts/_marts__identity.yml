@@ -1,26 +1,14 @@
 version: 2
 
 models:
-  - name: int_person_matching
-    description: >
-      Computes Person Technical Key (PTK) per group per pipeline run.
-      PTK = md5 of sorted source keys with 'ptk|' prefix.
-      Changes whenever group membership changes.
-
-  - name: int_person_identity_registry
-    description: >
-      Assigns a stable Persistent Person ID (PID) to each group across time.
-      PID survives PTK changes (growth, merge, split).
-      This is the core of the PID-based person_key approach.
-
   - name: bridge_person_identity
     description: >
       Maps source_key -> PTK -> PID -> person_key per pipeline run.
-      person_key = md5(PID), making it stable across PTK changes.
+      person_key = sha256(PID), making it stable across PTK changes.
 
   - name: dim_person
     description: >
-      Gold person dimension. person_key = md5(PID).
+      Gold person dimension. person_key = sha256(PID).
       One row per person (latest state). FK for all fact tables.
     columns:
       - name: person_key
@@ -49,8 +37,3 @@ models:
           - relationships:
               to: ref('dim_person')
               field: person_key
-
-  - name: int_pid_stability_proof
-    description: >
-      Exploration view showing PTK changes vs PID stability across runs.
-      Use for visual verification that the design works.

@@ -31,7 +31,7 @@ select
     m.sorted_members as source_keys_in_group,
     left(r.person_technical_key, 12) as ptk,
     left(r.person_persistent_id, 12) as pid,
-    left(md5(r.person_persistent_id), 12) as person_key
+    left(sha256(r.person_persistent_id), 12) as person_key
 from registry r
 inner join matching m
     on r.pipeline_run = m.pipeline_run

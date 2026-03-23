@@ -34,7 +34,7 @@ select
     m.sorted_members as source_keys_in_group,
     left(r.person_technical_key, 12) as ptk,
     left(r.person_persistent_id, 12) as pid,
-    left(md5(r.person_persistent_id), 12) as person_key,
+    left(sha256(r.person_persistent_id), 12) as person_key,
     (select left(p.person_persistent_id, 12)
      from prev_registry p
      where p.group_id = 'group_a') as was_group_a_pid,

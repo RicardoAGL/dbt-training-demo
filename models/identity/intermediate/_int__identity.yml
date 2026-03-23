@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: int_person_matching
+    description: >
+      Computes Person Technical Key (PTK) per group per pipeline run.
+      PTK = sha256 of sorted source keys with 'ptk|' prefix.
+      Changes whenever group membership changes.
+
+  - name: int_person_identity_registry
+    description: >
+      Assigns a stable Persistent Person ID (PID) to each group across time.
+      PID survives PTK changes (growth, merge, split).
+      This is the core of the PID-based person_key approach.
+
+  - name: int_pid_stability_proof
+    description: >
+      Exploration view showing PTK changes vs PID stability across runs.
+      Use for visual verification that the design works.

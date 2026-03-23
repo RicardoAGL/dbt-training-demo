@@ -11,7 +11,7 @@ with registry as (
     select
         pipeline_run,
         person_persistent_id as pid,
-        md5(person_persistent_id) as person_key,
+        sha256(person_persistent_id) as person_key,
         person_technical_key as ptk
     from {{ ref('int_person_identity_registry') }}
 ),

@@ -18,7 +18,7 @@ select
     group_id,
     left(person_technical_key, 8) as ptk_short,
     person_persistent_id as pid,
-    md5(person_persistent_id) as person_key,
+    sha256(person_persistent_id) as person_key,
     member_count,
     assignment_reason
 from registry

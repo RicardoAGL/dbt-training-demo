@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_source_records
+    description: >
+      Staged source system records. One row per known source_key.
+    columns:
+      - name: source_key
+        description: "Namespaced identifier from source system (e.g. dav:101)"
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_match_groups
+    description: >
+      Staged identity resolution match groups. Each row assigns a source_key
+      to a group_id for a given pipeline_run.
+    columns:
+      - name: source_key
+        tests:
+          - not_null
+      - name: group_id
+        tests:
+          - not_null
+
+  - name: stg_bookings
+    description: >
+      Staged bookings from source systems. Each booking ties to a source_key.
+    columns:
+      - name: booking_id
+        tests:
+          - unique
+          - not_null
+      - name: source_key
+        tests:
+          - not_null
