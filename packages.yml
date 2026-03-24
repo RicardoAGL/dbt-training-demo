@@ -1,0 +1,11 @@
+# -- Ex 7.1: Packages --
+# Packages add reusable macros, tests, and models to your project
+# Install with: dbt deps
+# Docs: https://hub.getdbt.com
+
+packages:
+  - package: dbt-labs/dbt_utils
+    version: ">=1.1.0,<2.0.0"
+
+  - package: dbt-labs/codegen
+    version: ">=0.12.0,<1.0.0"

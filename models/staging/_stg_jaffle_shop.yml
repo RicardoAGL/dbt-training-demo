@@ -1,4 +1,5 @@
 # -- Ex 5.2: Schema tests for staging models --
+# -- Ex 7.1: Added dbt_utils.expression_is_true test (requires dbt deps) --
 # Tests run with: dbt test --select staging
 
 version: 2
@@ -42,6 +43,12 @@ models:
           - relationships:
               to: ref('stg_orders')
               field: order_id
+      - name: amount
+        description: Payment amount in dollars (converted from cents)
+        tests:
+          # Ex 7.1: dbt_utils test - checks a SQL expression is true for every row
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
       - name: payment_method
         description: How the customer paid
         tests:
