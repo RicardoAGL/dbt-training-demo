@@ -1,9 +1,12 @@
--- Ex 8.3: Jinja - Step 3: Fix trailing comma with set + loop.last
--- {% set %} defines the list at the top (single source of truth)
--- {% if not loop.last %} only adds a comma between columns, not after the last one
--- Try: dbt compile --select order_payments_pivoted  (clean SQL now!)
+-- Ex 8.4: Jinja - Step 4: Dynamic pivot with dbt_utils.get_column_values
+-- Now the list comes from the DATA, not from our code
+-- If a new payment method appears tomorrow, this model handles it automatically
+-- Requires: dbt deps (to install dbt_utils)
 
-{% set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}
+{%- set payment_methods = dbt_utils.get_column_values(
+    table=ref('stg_payments'),
+    column='payment_method'
+) -%}
 
 with payments as (
 
@@ -16,15 +19,15 @@ pivoted as (
     select
         order_id,
 
-        {% for payment_method in payment_methods %}
+        {%- for payment_method in payment_methods %}
 
         sum(case when payment_method = '{{ payment_method }}' then amount else 0 end) as {{ payment_method }}_amount
 
-        {% if not loop.last %}
+        {%- if not loop.last -%}
         ,
-        {% endif %}
+        {%- endif -%}
 
-        {% endfor %}
+        {%- endfor %}
 
     from payments
 
