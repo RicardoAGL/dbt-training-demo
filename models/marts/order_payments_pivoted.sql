@@ -1,6 +1,6 @@
--- Ex 8.1: Jinja - Step 1: Pure SQL pivot
--- Problem: We want payment amounts broken out by method per order
--- This works, but notice the repetition...
+-- Ex 8.2: Jinja - Step 2: Replace repetition with {% for %} loop
+-- Better! But we have a problem: trailing comma after the last column
+-- Try: dbt compile --select order_payments_pivoted  (see the compiled SQL)
 
 with payments as (
 
@@ -13,10 +13,12 @@ pivoted as (
     select
         order_id,
 
-        sum(case when payment_method = 'credit_card' then amount else 0 end) as credit_card_amount,
-        sum(case when payment_method = 'coupon' then amount else 0 end) as coupon_amount,
-        sum(case when payment_method = 'bank_transfer' then amount else 0 end) as bank_transfer_amount,
-        sum(case when payment_method = 'gift_card' then amount else 0 end) as gift_card_amount,
+        {% for payment_method in ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}
+
+        sum(case when payment_method = '{{ payment_method }}' then amount else 0 end) as {{ payment_method }}_amount,
+        -- ^ trailing comma on last column will cause a SQL error!
+
+        {% endfor %}
 
         sum(amount) as total_amount
 
