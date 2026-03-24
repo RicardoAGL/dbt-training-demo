@@ -1,7 +1,21 @@
--- Ex 4.1: Lineage - orders model
--- This model creates a node in the DAG between staging and customers
--- refs: stg_orders, stg_payments -> orders -> customers
--- Run: dbt run --select +orders  (runs this model and all upstream)
+-- Ex 9.1: Materializations - Incremental model
+-- Problem: What if this table has millions of rows and grows daily?
+-- Solution: Only process NEW rows since the last run
+--
+-- Config: materialized='incremental' + unique_key for upsert behavior
+-- The {% if is_incremental() %} block only runs on incremental runs (not full-refresh)
+-- First run: builds the full table (like materialized='table')
+-- Next runs: only inserts/updates rows where order_date > max existing date
+--
+-- Run: dbt run --select orders              (incremental)
+-- Run: dbt run --select orders --full-refresh  (rebuild from scratch)
+
+{{
+    config(
+        materialized='incremental',
+        unique_key='order_id'
+    )
+}}
 
 with orders as (
 
@@ -43,3 +57,10 @@ final as (
 )
 
 select * from final
+
+{% if is_incremental() %}
+
+    -- only get rows that are newer than the latest order_date in our table
+    where order_date > (select max(order_date) from {{ this }})
+
+{% endif %}
