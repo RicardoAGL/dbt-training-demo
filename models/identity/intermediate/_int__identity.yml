@@ -11,7 +11,15 @@ models:
     description: >
       Assigns a stable Persistent Person ID (PID) to each group across time.
       PID survives PTK changes (growth, merge, split).
-      This is the core of the PID-based person_key approach.
+      This is the core of the PID-based person_key approach (ADR-003 Section 11).
+
+  - name: bridge_person_identity
+    description: >
+      Maps source_key -> PTK -> PID -> person_key per pipeline run.
+      person_key = sha256(PID), making it stable across PTK changes.
+      Lives in intermediate (not Gold) per ADR-003. Following Sergi's feedback
+      (2026-03-11), facts link to PID-based person_key, eliminating the
+      reattribution post-hook that would be needed with PTK-based derivation.
 
   - name: int_pid_stability_proof
     description: >

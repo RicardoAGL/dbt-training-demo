@@ -1,5 +1,6 @@
 /*
     Bridge: maps each source_key to its person_key (the Gold FK).
+    Lives in the INTERMEDIATE layer (not Gold) per ADR-003.
 
     JOIN PATH:  source_key -> group_id -> PTK -> PID -> person_key
                 (source)     (cluster)   (mutable)  (stable)  (FK on facts)
@@ -8,6 +9,14 @@
     - What source systems know (source_key)
     - What identity resolution produces (group_id, PTK)
     - What the warehouse uses (person_key = sha256(PID))
+
+    DESIGN NOTE (Sergi, 2026-03-11):
+    Sergi's feedback was that facts and dimensions should link to the persistent
+    person identifier, NOT the technical key. By deriving person_key = sha256(PID)
+    instead of sha256(PTK), we eliminate the reattribution problem entirely:
+    when a group grows, merges, or splits, the PTK changes but the PID (and
+    therefore person_key) stays stable. No post-hook correction needed on facts.
+    This is the Phase 2 approach from ADR-003 Section 11.
 */
 
 with match_groups as (

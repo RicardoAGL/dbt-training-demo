@@ -1,15 +1,11 @@
 version: 2
 
 models:
-  - name: bridge_person_identity
-    description: >
-      Maps source_key -> PTK -> PID -> person_key per pipeline run.
-      person_key = sha256(PID), making it stable across PTK changes.
-
   - name: dim_person
     description: >
       Gold person dimension. person_key = sha256(PID).
       One row per person (latest state). FK for all fact tables.
+      No reattribution needed because person_key is PID-based.
     columns:
       - name: person_key
         description: "Stable surrogate key derived from PID. Never changes."
@@ -25,7 +21,8 @@ models:
   - name: fct_booking
     description: >
       Fact table with person_key FK. Joined via bridge on source_key.
-      Because person_key is PID-based, it NEVER needs reattribution.
+      Because person_key is PID-based (not PTK-based), it NEVER needs
+      reattribution when identity groups change.
     columns:
       - name: booking_id
         tests:

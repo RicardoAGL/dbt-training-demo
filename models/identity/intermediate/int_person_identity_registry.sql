@@ -12,8 +12,13 @@
     - Groups merge    -> majority group's PID wins (more members = more history)
     - Group splits    -> majority subgroup keeps PID, minority gets a new PID
 
-    THE CORE INSIGHT: PTK is ephemeral (graph fingerprint), PID is permanent (person identity).
-    Because person_key = sha256(PID), fact tables never need reattribution when groups change.
+    THE CORE INSIGHT (Sergi, 2026-03-11 / ADR-003 Section 11):
+    PTK is ephemeral (graph fingerprint), PID is permanent (person identity).
+    Sergi's feedback: "Facts should be linked to the persistent person, not the
+    technical key." By deriving person_key from PID instead of PTK, we avoid the
+    reattribution flow that would otherwise be needed (detect -> audit -> post-hook
+    correction on every fact table). The PTK still exists for identity graph accuracy,
+    but it never reaches Gold.
 
     Processes runs T1 -> T2 -> T3 -> T4 sequentially, carrying PIDs forward.
     In production this would be an incremental model; here we simulate all runs.

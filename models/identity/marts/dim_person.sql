@@ -6,6 +6,12 @@
     - person_key = sha256(PID) therefore NEVER changes.
     - Fact tables join on person_key, so they never need reattribution.
 
+    CONTRAST WITH PHASE 1 (PTK-based person_key):
+    If person_key = sha256(PTK), then every time a group grows/merges/splits,
+    the person_key changes and all fact rows need correction via a reattribution
+    post-hook (ADR-003 Section 10.2). With PID-based derivation, this entire
+    reattribution pipeline is eliminated.
+
     This model takes the LATEST state for each PID from the registry.
 */
 
