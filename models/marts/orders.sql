@@ -3,7 +3,7 @@
 -- Solution: Only process NEW rows since the last run
 --
 -- Config: materialized='incremental' + unique_key for upsert behavior
--- The {% if is_incremental() %} block only runs on incremental runs (not full-refresh)
+-- The is_incremental() block only runs on incremental runs (not full-refresh)
 -- First run: builds the full table (like materialized='table')
 -- Next runs: only inserts/updates rows where order_date > max existing date
 --
@@ -64,3 +64,4 @@ select * from final
     where order_date > (select max(order_date) from {{ this }})
 
 {% endif %}
+
