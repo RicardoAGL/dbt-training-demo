@@ -3,7 +3,7 @@
 -- If a new payment method appears tomorrow, this model handles it automatically
 -- Requires: dbt deps (to install dbt_utils)
 
-{%- set payment_methods = dbt_utils.get_column_values(
+{% set payment_methods = dbt_utils.get_column_values(
     table=ref('stg_payments'),
     column='payment_method'
 ) -%}
