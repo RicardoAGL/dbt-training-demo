@@ -1,0 +1,74 @@
+version: 2
+seeds:
+  - name: raw_customers
+    columns:
+      - name: id
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: first_name
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+      - name: last_name
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+  - name: raw_orders
+    columns:
+      - name: id
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: user_id
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: order_date
+        description: ''
+        data_type: DATE
+        config:
+          meta: {}
+          tags: []
+      - name: status
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+  - name: raw_payments
+    columns:
+      - name: id
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: order_id
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: payment_method
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+      - name: amount
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []

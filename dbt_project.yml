@@ -19,16 +19,21 @@ clean-targets:
 
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
-seeds: 
+seeds:
+  +dbt-osmosis: "_seeds.yml"
   +docs:
     node_color: '#cd7f32'
 
 models:
   jaffle_shop:
     materialized: table
+    +dbt-osmosis: "__{model}.yml"
     staging:
       materialized: view
+      +dbt-osmosis: "_stg__{model}.yml"
       +docs:
         node_color: 'silver'
+    marts:
+      +dbt-osmosis: "_marts.yml"
     +docs:
       node_color: 'gold'

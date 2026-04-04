@@ -18,6 +18,22 @@ sources:
               - unique
               - not_null
 
+            data_type: INTEGER
+            config:
+              meta: {}
+              tags: []
+          - name: first_name
+            description: ''
+            data_type: VARCHAR
+            config:
+              meta: {}
+              tags: []
+          - name: last_name
+            description: ''
+            data_type: VARCHAR
+            config:
+              meta: {}
+              tags: []
       - name: raw_orders
         description: One record per order
         loaded_at_field: order_date
@@ -30,11 +46,32 @@ sources:
             tests:
               - unique
               - not_null
+            data_type: INTEGER
+            config:
+              meta: {}
+              tags: []
+          - name: user_id
+            description: ''
+            data_type: INTEGER
+            config:
+              meta: {}
+              tags: []
+          - name: order_date
+            description: ''
+            data_type: DATE
+            config:
+              meta: {}
+              tags: []
           - name: status
             tests:
               - accepted_values:
-                  values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+                  values: [placed, shipped, completed, return_pending, returned]
 
+            description: ''
+            data_type: VARCHAR
+            config:
+              meta: {}
+              tags: []
       - name: raw_payments
         description: One record per payment from Stripe
         columns:
@@ -43,3 +80,25 @@ sources:
             tests:
               - unique
               - not_null
+            data_type: INTEGER
+            config:
+              meta: {}
+              tags: []
+          - name: order_id
+            description: ''
+            data_type: INTEGER
+            config:
+              meta: {}
+              tags: []
+          - name: payment_method
+            description: ''
+            data_type: VARCHAR
+            config:
+              meta: {}
+              tags: []
+          - name: amount
+            description: ''
+            data_type: INTEGER
+            config:
+              meta: {}
+              tags: []

@@ -1,0 +1,47 @@
+version: 2
+models:
+  - name: stg_orders
+    description: Staged order data from the Jaffle Shop app
+    columns:
+      - name: order_id
+        description: Primary key for orders
+        tests:
+          - unique
+          - not_null
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: customer_id
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: order_date
+        description: ''
+        data_type: DATE
+        config:
+          meta: {}
+          tags: []
+      - name: status
+        description: |-
+          One of the following values:
+
+          | status         | definition                                                 |
+          |----------------|------------------------------------------------------------|
+          | placed         | Order placed but not yet shipped                           |
+          | shipped        | Order has been shipped but hasn't yet been delivered       |
+          | completed      | Order has been received by customers                       |
+          | return_pending | Customer has indicated they would like to return this item |
+          | returned       | Item has been returned                                     |
+        tests:
+          - accepted_values:
+              values: [placed, shipped, completed, return_pending, returned]
+
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+        doc_blocks:
+          - doc.jaffle_shop.order_status

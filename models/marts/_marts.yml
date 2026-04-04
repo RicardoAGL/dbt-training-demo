@@ -1,9 +1,4 @@
-# -- Ex 5.2: Schema tests for mart models --
-# Tests run with: dbt test --select marts
-# Run all: dbt build  (runs models + tests together)
-
 version: 2
-
 models:
   - name: customers
     description: One record per customer with order history and lifetime value
@@ -14,6 +9,46 @@ models:
           - unique
           - not_null
 
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: first_name
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+      - name: last_name
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+      - name: first_order_date
+        description: ''
+        data_type: DATE
+        config:
+          meta: {}
+          tags: []
+      - name: most_recent_order_date
+        description: ''
+        data_type: DATE
+        config:
+          meta: {}
+          tags: []
+      - name: number_of_orders
+        description: ''
+        data_type: BIGINT
+        config:
+          meta: {}
+          tags: []
+      - name: lifetime_value
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
   - name: orders
     description: One record per order with payment amount
     columns:
@@ -22,5 +57,104 @@ models:
         tests:
           - unique
           - not_null
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: customer_id
+        description: ''
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: order_date
+        description: ''
+        data_type: DATE
+        config:
+          meta: {}
+          tags: []
+      - name: status
+        description: |-
+          One of the following values:
+
+          | status         | definition                                                 |
+          |----------------|------------------------------------------------------------|
+          | placed         | Order placed but not yet shipped                           |
+          | shipped        | Order has been shipped but hasn't yet been delivered       |
+          | completed      | Order has been received by customers                       |
+          | return_pending | Customer has indicated they would like to return this item |
+          | returned       | Item has been returned                                     |
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
       - name: amount
         description: Total payment amount in dollars
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+  - name: order_payments_pivoted_macro
+    columns:
+      - name: order_id
+        description: Foreign key to stg_orders
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: credit_card_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+      - name: bank_transfer_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+      - name: coupon_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+      - name: gift_card_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+  - name: order_payments_pivoted
+    columns:
+      - name: order_id
+        description: Foreign key to stg_orders
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: credit_card_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+      - name: bank_transfer_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+      - name: coupon_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []
+      - name: gift_card_amount
+        description: ''
+        data_type: DOUBLE
+        config:
+          meta: {}
+          tags: []

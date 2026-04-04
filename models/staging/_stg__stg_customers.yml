@@ -1,0 +1,27 @@
+version: 2
+models:
+  - name: stg_customers
+    description: Staged customer data from the Jaffle Shop app
+    columns:
+      - name: customer_id
+        description: Primary key for customers
+        tests:
+          - unique
+          - not_null
+
+        data_type: INTEGER
+        config:
+          meta: {}
+          tags: []
+      - name: first_name
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
+      - name: last_name
+        description: ''
+        data_type: VARCHAR
+        config:
+          meta: {}
+          tags: []
